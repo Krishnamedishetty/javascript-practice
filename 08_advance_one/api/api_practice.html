@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Joke Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: #00ea97;
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        button:hover {
+            background-color: #39ffb9;
+        }
+        .joke-container {
+            text-align: center;
+            max-width: 500px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+        }
+        #punchline {
+            color: #00ea97;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dad Joke Generator 🎭</h1>
+    <button id="joke-btn">Tell Me a Joke</button>
+
+    <div class="joke-container">
+        <p id="setup"></p>
+        <p id="punchline"></p>
+    </div>
+
+    <script>
+        const button = document.getElementById('joke-btn');
+        const setupText = document.getElementById('setup');
+        const punchlineText = document.getElementById('punchline');
+        
+        const requestUrl = 'https://official-joke-api.appspot.com/random_joke';
+
+        button.addEventListener('click', function() {
+            
+            // 1. Create your XMLHttpRequest object (xhr)
+            const xhr = new XMLHttpRequest();
+
+            // 2. Open the request using 'GET' and the requestUrl
+            xhr.open('GET', requestUrl);
+
+            // 3. Setup the onreadystatechange function
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4){
+                    const data = JSON.parse(this.responseText)
+
+                    setupText.textContent = data.setup;
+
+                    punchlineText.textContent = data.punchline;
+
+                }
+            };
+
+            xhr.send();
+            // 4. Inside the readyState === 4 check, parse the responseText into a variable named 'data'
+            // 5. Change setupText.textContent to data.setup
+            // 6. Change punchlineText.textContent to data.punchline
+            // 7. Send the request!
+            
+        });
+    </script>
+</body>
+</html>

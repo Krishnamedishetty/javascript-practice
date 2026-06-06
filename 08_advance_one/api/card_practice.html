@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Assignment</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: lightgreen;
+            color: darkgoldenrod;
+        }
+
+        .card{
+            background-color: #ac1b1b;
+            border: 1px solid #040000;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            width: 250px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 60%;
+            border: 5px solid burlywood;
+            object-fit: cover;
+        }
+
+        .card h2 {
+            margin: 15px 0 8px 0;
+            font-size: 1.4rem; 
+        }
+
+        .card p {
+            margin: 0;
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .followers-count {
+            font-weight: bold;
+            color: blanchedalmond;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="card" id="profile-card">
+        <img id="avatar" src="" alt="Profile Picture">
+        <h2 id="username">Loading....</h2>
+        <p>Followers: <span id="followers" class="followers-count">0</span></p>
+    </div>
+
+    
+</body>
+
+<script>
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary';
+    const spiderman = new XMLHttpRequest();
+
+    spiderman.open('GET', requestUrl);
+    // what is GET
+
+    spiderman.onreadystatechange = function() {
+        if(spiderman.readyState === 4){
+            const data = JSON.parse(this.responseText);
+            // what is responseText
+
+            // target the dom elements
+            const card = document.getElementById('profile-card');
+            const avatar = document.getElementById('avatar');
+            const username = document.getElementById('username');
+            const followers = document.getElementById('followers');
+
+            // Inject the data from GITHUB API
+            avatar.src = data.avatar_url;
+            username.textContent = data.name || data.login;
+            followers.textContent = data.followers;
+
+            card.style.display = 'block';
+            // what is block in the current situation
+        }
+    };
+
+    spiderman.send();
+</script>
+</html>
